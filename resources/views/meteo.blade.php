@@ -3,41 +3,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
         body{
-            background: #00FFAA;
+            background: #00FFFF;
         }
         .content{
-            width: 50%;
-            background: #00FFFF;
+            width: 90%;
             margin:auto;
             padding: 5px;
             display:grid;
-            grid-template-columns: repeat(5,1fr)
             gap: 20px;
         }
         .element{
-            background: blue;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            border:  blue solid 1px;
+            border-radius: 50px;
+            gap: 10px;
         }
         @media screen and (max-width:767){
             .content{
+                width: 50%;
                 grid-template-columns: repeat(1,1fr)
             }
         }
         @media screen and (min-width:768px){
             .content{
+                width: 90%;
                 grid-template-columns: repeat(7,1fr)
             }
+        }
+        .daytxt{
+            text-align: center;
+            font-weight: blod;
+            font-size: 50px;
         }
     </style>        
     </head>
     <body>
         <div class="content">
-            <span class="element">Mon</span>
-            <span class="element">Tue</span>
-            <span class="element">Wed</span>
-            <span class="element">Thu</span>
-            <span class="element">Fri</span>
-            <span class="element">Sat</span>
-            <span class="element">Sun</span>
+            @foreach($data as $k=>$d)
+                <div class="element">
+                    <div class="daytxt">
+                        {{$d['day']}}
+                    </div>
+                    <div>
+                        <img src="{{$d['icon']}}" alt="">
+                    </div>
+                    <div class="daytxt">   
+                        {{$d['temp']}}&deg;
+                    </div>
+                </div>
+            @endforeach
         </div>
     </body>
 </html>
