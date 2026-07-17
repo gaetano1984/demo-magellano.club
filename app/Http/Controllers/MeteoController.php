@@ -3,49 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class MeteoController extends Controller
 {
     //
+    public function getData(){
+        $c = new Client([
+            'base_uri' => 'https://api.open-meteo.com/v1/'
+            ,'query' => [
+                'latitude' => '45.3099'
+                ,'longitude' => '9.5008'
+                ,'daily' => 'weather_code,temperature_2m_min,temperature_2m_max'
+            ]
+        ]);
+        $response = $c->request(
+            'GET'
+            ,'forecast'
+        );
+        $response = (string)$response->getBody();
+        $response = json_decode($response, TRUE);
+        
+        $meteo = [];
+        foreach($response['daily']['time'] as $k => $date){
+            if(!array_key_exists($date, $meteo)){
+                $meteo[$date] = [
+                    'date' => config('meteo.date.d'.date('w', strtotime($date))).' '.date('d', strtotime($date))
+                    ,'icon' => ""
+                    ,'temp_min' => ""
+                    ,'temp_max' => ""
+                ];
+            }
+            $meteo[$date]['icon'] = '/img/'.config('meteo.weather.w'.$response['daily']['weather_code'][$k]);
+            $meteo[$date]['temp_min'] = $response['daily']['temperature_2m_min'][$k];
+            $meteo[$date]['temp_max'] = $response['daily']['temperature_2m_max'][$k];
+        }
+        $meteo = array_values($meteo);
+        return response()->json($meteo);
+    }
 
     public function meteo(){
-        $week = [
-            "d1" => "Mon",
-            "d2" => "Tue",
-            "d3" => "Wed",
-            "d4" => "Thu",
-            "d5" => "Fri",
-            "d6" => "Sat",
-            "d7" => "Sun",
-        ];
-
-        $img = [
-            '/img/cielo_sereno.png',
-            '/img/coperto.png',
-            '/img/neve.png',
-            '/img/pioggia_leggera.png',
-            '/img/poco_nuvoloso.png',
-            '/img/temporale.png',
-        ];
-
-        $meteo = [];
-
-        $d = intval(date('w'));
-        for($i=$d; $i<=7; $i++){
-            $meteo[] = [
-                'day' => $week['d'.$i],
-                'icon' => $img[rand(0,5)],
-                'temp' => rand(0,40)
-            ];
-        }
-        for($i=1; $i<$d; $i++){
-            $meteo[] = [
-                'day' => $week['d'.$i],
-                'icon' => $img[rand(0,5)],
-                'temp' => rand(0,40)
-            ];
-        }
-
-        return view('meteo', ['data' => $meteo]);
+        return view('meteo', ['data' => []]);
     }
 }
