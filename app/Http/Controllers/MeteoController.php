@@ -8,6 +8,10 @@ use GuzzleHttp\Client;
 class MeteoController extends Controller
 {
     //
+    public function userSettings(){
+        return view('users.settings');
+    }
+
     public function getData(){
         $c = new Client([
             'base_uri' => 'https://api.open-meteo.com/v1/'
