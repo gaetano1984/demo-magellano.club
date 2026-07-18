@@ -4,7 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
         body{
-            background: #00FFFF;
+            /*background: #00FFFF;*/
+            background: linear-gradient(135deg, #e0f2fe, #f1f5f9);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         .content{
             width: 90%;
@@ -77,6 +79,16 @@
             text-align: center;
             font-weight: bold;
         }
+        .temp-max {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .temp-min {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
     </style>        
     </head>
     <body>
@@ -109,7 +121,7 @@
                                     </div>\
                                     <img class="iconweather" src="'+v.icon+'">\
                                         <div class="temptxt">\
-                                            '+v.temp_min+'&deg; - '+v.temp_max+'&deg; \
+                                            <span class="temp-min">'+v.temp_min+'&deg;</span> <span class="temp-max">'+v.temp_max+'&deg;</span> \
                                         </div>\
                                     <div>\
                                     </div>\
