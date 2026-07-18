@@ -19,15 +19,34 @@
             flex-direction: column;
             text-align: center;
             border:  blue solid 1px;
-            border-radius: 50px;
+            border-radius: 25px;
             gap: 10px;
             padding-top:10px;
             padding-bottom:10px;
         }
-        @media screen and (max-width:767){
+        @media screen and (max-width:767px){
             .content{
-                width: 50%;
+                width: 80%;
                 grid-template-columns: repeat(1,1fr)
+            }
+            .element{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                width
+            }
+            .daytxt{
+                margin: auto;
+                flex:1;
+                font-size: 35px;
+            }
+            .temptxt{
+                margin: auto;
+                flex:1;
+                font-size: 30px;
+            }
+            .iconweather{
+                width: 30%;
             }
         }
         @media screen and (min-width:768px){
@@ -35,16 +54,28 @@
                 width: 90%;
                 grid-template-columns: repeat(7,1fr)
             }
+            .daytxt{
+                margin: auto;
+                flex:1;
+                font-size: 35px;
+            }
+            .temptxt{
+                margin: auto;
+                flex:1;
+                font-size: 25px;
+            }
+            .iconweather{
+                width: 90%;
+                margin: auto;
+            }
         }
         .daytxt{
             text-align: center;
-            font-weight: blod;
-            font-size: 50px;
+            font-weight: bold;
         }
         .temptxt{
             text-align: center;
-            font-weight: blod;
-            font-size: 25px;
+            font-weight: bold;
         }
     </style>        
     </head>
@@ -76,11 +107,11 @@
                                     <div class="daytxt">\
                                         '+v.date+'\
                                     </div>\
+                                    <img class="iconweather" src="'+v.icon+'">\
+                                        <div class="temptxt">\
+                                            '+v.temp_min+'&deg; - '+v.temp_max+'&deg; \
+                                        </div>\
                                     <div>\
-                                        <img src="'+v.icon+'">\
-                                    </div>\
-                                    <div class="temptxt">\
-                                        '+v.temp_min+'&deg; - '+v.temp_max+'&deg; \
                                     </div>\
                                 </div>\
                             ').appendTo('.content');
